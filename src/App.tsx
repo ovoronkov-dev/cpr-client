@@ -3,6 +3,7 @@ import { Home } from "~views/Home/Home";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 import { defaultTheme } from "~styles/theme";
 import { Polls } from "~views/Polls/Polls";
+import { ProtectedRoute } from "~components/ProtectedRoute";
 
 function App() {
   return (
@@ -11,7 +12,9 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/polls" element={<Polls />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/polls" element={<Polls />} />
+        </Route>
       </Routes>
     </ThemeProvider>
   );
