@@ -7,28 +7,28 @@ interface Props {
   report: PollReportModel;
 }
 
-export const PercentageMatrix = ({ report }: Props) => {
+export const DifferenceMatrix = ({ report }: Props) => {
   const parsed = useMemo(() => {
     const result: ParsedReport = {};
 
     report.data.forEach((pair) => {
       if (!result[pair.firstIndex]) result[pair.firstIndex] = { [pair.firstIndex]: 0 };
-      result[pair.firstIndex][pair.secondIndex] = pair.firstValue;
+      result[pair.firstIndex][pair.secondIndex] = -pair.firstValue;
 
       if (!result[pair.secondIndex]) result[pair.secondIndex] = { [pair.secondIndex]: 0 };
-      result[pair.secondIndex][pair.firstIndex] = pair.secondValue;
+      result[pair.secondIndex][pair.firstIndex] = -pair.secondValue;
     });
 
     return result;
   }, [report]);
 
-  const summary = useMemo(() => {
+  const difference = useMemo(() => {
     return Object.keys(parsed).map((key) => Object.values(parsed[+key]).reduce((acc, curr) => acc + curr, 0));
   }, [parsed]);
 
   return (
     <Fragment>
-      <Typography fontWeight="bold">Матриця відсотків</Typography>
+      <Typography fontWeight="bold">Матриця різниць</Typography>
 
       <Table component={Paper} sx={{ mt: 1 }}>
         <TableHead>
@@ -48,9 +48,9 @@ export const PercentageMatrix = ({ report }: Props) => {
               {Object.keys(parsed[+key]).map((innerKey) => (
                 <TableCell key={innerKey}>{parsed[+key][+innerKey]}</TableCell>
               ))}
-              <TableCell>{summary[+key]}</TableCell>
+              <TableCell>{difference[+key]}</TableCell>
               <TableCell>
-                <strong>{summary[+key] / 100}</strong>
+                <strong>{difference[+key] / 100}</strong>
               </TableCell>
             </TableRow>
           ))}

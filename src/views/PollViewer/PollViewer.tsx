@@ -1,4 +1,4 @@
-import { Alert, Button, CircularProgress, Grid, Paper, Typography } from "@mui/material";
+import { Alert, Box, Button, CircularProgress, Grid, Paper, Typography } from "@mui/material";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { ReportViewer } from "~components/ReportViewer";
@@ -36,13 +36,15 @@ export const PollViewer = () => {
       </Grid>
 
       {!reportLoading && !reports.length && (
-        <Button component={Link} to={`/playground/${id}`} variant="contained" color="primary">
+        <Button component={Link} to={`/playground/${id}`} variant="contained" color="primary" sx={{ mt: 1 }}>
           Почати проходження
         </Button>
       )}
 
       {reports.map((report) => (
-        <ReportViewer key={report.id} report={report.data() as any} />
+        <Box mt={2}>
+          <ReportViewer key={report.id} report={report.data() as any} />
+        </Box>
       ))}
     </Paper>
   );
