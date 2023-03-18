@@ -1,10 +1,20 @@
-import { Fragment } from "react";
-import { GoogleAuthButton } from "~components/GoogleAuthButton";
+import { Box, Typography } from "@mui/material";
 import { useAuthState } from "~firebase/hooks/useAuthState";
-import { HomeIntroContainer } from "./components/IntroContainer";
+import { HomeGuestIntro } from "./components/GuestIntro";
+import { HomeUserIntro } from "./components/UserIntro";
 
 export const Home = () => {
   const [user, loading] = useAuthState();
 
-  return <Fragment>{!user && !loading && <GoogleAuthButton />}</Fragment>;
+  return (
+    <Box>
+      <Typography variant="h1" align="center" sx={{ mb: 2 }}>
+        CollPicRank
+      </Typography>
+
+      {!user && !loading && <HomeGuestIntro />}
+
+      {user && <HomeUserIntro />}
+    </Box>
+  );
 };

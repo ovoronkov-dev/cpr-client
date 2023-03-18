@@ -6,7 +6,7 @@ export const defaultTheme = createTheme({
     htmlFontSize: 16,
 
     h1: {
-      fontSize: "1.5rem",
+      fontSize: "3.5rem",
       fontWeight: "bold",
     },
     h2: {
