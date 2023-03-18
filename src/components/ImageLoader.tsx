@@ -6,7 +6,7 @@ type Props = React.DetailedHTMLProps<React.ImgHTMLAttributes<HTMLImageElement>, 
   src: Required<string>;
 };
 
-const URL_REGEX = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w.-]*)*\/?$/;
+const URL_REGEX = /^(https?|ftp):\/\/(-\.)?([^\s/?\.#]+\.?)+(\/[^\s]*)?$/i;
 
 export const ImageLoader = ({ src, ...props }: Props) => {
   const [imageSrc, setImageSrc] = useState<string>(src);
