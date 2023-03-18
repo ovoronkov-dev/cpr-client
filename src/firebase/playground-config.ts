@@ -1,6 +1,5 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getStorage } from "firebase/storage";
 
 export const playgroundApp = initializeApp({
   apiKey: import.meta.env.VITE_FIRE_API_KEY,
@@ -13,4 +12,3 @@ export const playgroundApp = initializeApp({
 });
 
 export const playgroundAuth = getAuth(playgroundApp);
-export const playgroundStorage = getStorage(playgroundApp);

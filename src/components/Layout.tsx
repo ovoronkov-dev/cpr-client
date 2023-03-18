@@ -36,10 +36,10 @@ export const Layout = ({ children }: PropsWithChildren<{}>) => {
           {user && (
             <Fragment>
               <Box>
-                <Button color="inherit" variant="text" disableRipple>
+                <Button color="inherit" variant="text" disableRipple component={Link} to="/polls">
                   Всі опитування
                 </Button>
-                <Button color="inherit" variant="text" disableRipple>
+                <Button color="inherit" variant="text" disableRipple component={Link} to="/reports">
                   Пройдені опитування
                 </Button>
               </Box>
@@ -54,7 +54,18 @@ export const Layout = ({ children }: PropsWithChildren<{}>) => {
         </Toolbar>
       </AppBar>
 
-      <Box component="main" sx={{ p: 3, width: "100%" }}>
+      <Box
+        component="main"
+        sx={{
+          p: 3,
+          width: "100%",
+          height: "100vh",
+          overflow: "auto",
+          display: "flex",
+          flexDirection: "column",
+          boxSizing: "border-box",
+        }}
+      >
         <Toolbar />
 
         {children}
