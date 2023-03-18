@@ -1,9 +1,10 @@
 import { Alert, CircularProgress } from "@mui/material";
 import { Navigate, Outlet } from "react-router-dom";
-import { useAuthState } from "~firebase/hooks/useAuthState";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { playgroundAuth } from "~firebase/playground-config";
 
 export const ProtectedRoute = () => {
-  const [user, loading, error] = useAuthState();
+  const [user, loading, error] = useAuthState(playgroundAuth);
 
   if (loading) return <CircularProgress />;
 

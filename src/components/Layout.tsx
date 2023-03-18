@@ -1,17 +1,17 @@
-import { AppBar, Box, Button, Container, Toolbar, Typography } from "@mui/material";
-import { signOut } from "firebase/auth";
+import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
 import { Fragment, PropsWithChildren } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuthState } from "~firebase/hooks/useAuthState";
+import { useAuthState, useSignOut } from "react-firebase-hooks/auth";
 import { playgroundAuth } from "~firebase/playground-config";
 
 export const Layout = ({ children }: PropsWithChildren<{}>) => {
   const navigate = useNavigate();
 
-  const [user] = useAuthState();
+  const [user] = useAuthState(playgroundAuth);
+  const [signOut] = useSignOut(playgroundAuth);
 
-  const handleLogout = () => {
-    signOut(playgroundAuth);
+  const handleLogout = async () => {
+    await signOut();
     navigate("/");
   };
 

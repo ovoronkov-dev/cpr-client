@@ -1,6 +1,7 @@
 import { Alert, Button, CircularProgress, Grid, Paper, Typography } from "@mui/material";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
+import { ReportViewer } from "~components/ReportViewer";
 import { usePollDocument } from "~firebase/hooks/usePollDocument";
 import { useReportDocument } from "~firebase/hooks/useReportDocument";
 
@@ -39,6 +40,10 @@ export const PollViewer = () => {
           Почати проходження
         </Button>
       )}
+
+      {reports.map((report) => (
+        <ReportViewer key={report.id} report={report.data() as any} />
+      ))}
     </Paper>
   );
 };

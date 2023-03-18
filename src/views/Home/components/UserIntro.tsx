@@ -1,6 +1,5 @@
 import { Box, Button, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import { GoogleAuthButton } from "~components/GoogleAuthButton";
 
 export const HomeUserIntro = () => {
   return (

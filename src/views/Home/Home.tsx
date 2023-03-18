@@ -1,10 +1,11 @@
 import { Box, Typography } from "@mui/material";
-import { useAuthState } from "~firebase/hooks/useAuthState";
+import { playgroundAuth } from "~firebase/playground-config";
 import { HomeGuestIntro } from "./components/GuestIntro";
 import { HomeUserIntro } from "./components/UserIntro";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 export const Home = () => {
-  const [user, loading] = useAuthState();
+  const [user, loading] = useAuthState(playgroundAuth);
 
   return (
     <Box>

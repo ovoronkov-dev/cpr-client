@@ -1,20 +1,13 @@
-import {
-  collection,
-  DocumentData,
-  getDocs,
-  query,
-  QueryConstraint,
-  QueryDocumentSnapshot,
-  where,
-} from "firebase/firestore";
+import { collection, DocumentData, getDocs, query, QueryDocumentSnapshot, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { adminDb } from "~firebase/admin-config";
-import { useAuthState } from "./useAuthState";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { playgroundAuth } from "~firebase/playground-config";
 
 export const useReportDocument = (pollId?: string): [QueryDocumentSnapshot<DocumentData>[], boolean] => {
   const [loading, setLoading] = useState(false);
   const [docs, setDocs] = useState<QueryDocumentSnapshot<DocumentData>[]>([]);
-  const [user] = useAuthState();
+  const [user] = useAuthState(playgroundAuth);
 
   useEffect(() => {
     let isSubscribed = true;

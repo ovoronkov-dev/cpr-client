@@ -1,4 +1,4 @@
-import { Alert, Box, Button, CircularProgress, Grid, Paper, Typography } from "@mui/material";
+import { Alert, Box, Button, CircularProgress, Paper, Typography } from "@mui/material";
 import { useNavigate, useParams } from "react-router";
 import { usePollDocument } from "~firebase/hooks/usePollDocument";
 import { useForm, useFieldArray, FormProvider } from "react-hook-form";
@@ -9,16 +9,17 @@ import { generateRounds } from "./utils/generateRounds";
 import { PlagroundRound } from "./components/Round";
 import { addDoc, collection } from "firebase/firestore";
 import { adminDb } from "~firebase/admin-config";
-import { useAuthState } from "~firebase/hooks/useAuthState";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { playgroundAuth } from "~firebase/playground-config";
 
 export const Playground = () => {
   const { id } = useParams<{ id: string }>();
 
-  const navigate = useNavigate();
-  const [user] = useAuthState();
+  const [user] = useAuthState(playgroundAuth);
   const [document, loading, error] = usePollDocument(id);
   const [currentRound, setCurrentRound] = useState(0);
 
+  const navigate = useNavigate();
   const form = useForm<PlaygroundFormValues>({
     resolver: yupResolver(playgroundValidationSchema),
   });
