@@ -39,9 +39,9 @@ export const Layout = ({ children }: PropsWithChildren<{}>) => {
                 <Button color="inherit" variant="text" disableRipple component={Link} to="/polls">
                   Всі опитування
                 </Button>
-                <Button color="inherit" variant="text" disableRipple component={Link} to="/reports">
+                {/* <Button color="inherit" variant="text" disableRipple component={Link} to="/reports">
                   Пройдені опитування
-                </Button>
+                </Button> */}
               </Box>
 
               <Box sx={{ display: "flex", flexGrow: 1, justifyContent: "flex-end" }}>

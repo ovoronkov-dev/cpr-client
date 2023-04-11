@@ -13,10 +13,10 @@ export const DifferenceMatrix = ({ report }: Props) => {
 
     report.data.forEach((pair) => {
       if (!result[pair.firstIndex]) result[pair.firstIndex] = { [pair.firstIndex]: 0 };
-      result[pair.firstIndex][pair.secondIndex] = -pair.firstValue;
+      result[pair.firstIndex][pair.secondIndex] = pair.firstValue - pair.secondValue;
 
       if (!result[pair.secondIndex]) result[pair.secondIndex] = { [pair.secondIndex]: 0 };
-      result[pair.secondIndex][pair.firstIndex] = -pair.secondValue;
+      result[pair.secondIndex][pair.firstIndex] = pair.secondValue - pair.firstValue;
     });
 
     return result;

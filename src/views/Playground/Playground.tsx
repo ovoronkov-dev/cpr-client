@@ -43,9 +43,10 @@ export const Playground = () => {
       pollId: id,
       userId: user?.uid,
       data: values.pairs,
+      createdAt: new Date().toLocaleString(),
     });
 
-    navigate(`/reports/${id}`);
+    navigate(`/polls/${id}`);
   };
 
   if (error) return <Alert severity="error">{error.message}</Alert>;
@@ -56,7 +57,7 @@ export const Playground = () => {
     <FormProvider {...form}>
       <Box sx={{ display: "flex", flex: 1, flexDirection: "column", overflow: "visible" }}>
         {fields.map((field, index) => (
-          <Box key={field.id} hidden={index !== currentRound}>
+          <Box key={field.id} display={index !== currentRound ? "none" : "flex"} flexDirection="column" flex="1">
             <PlagroundRound currentRound={index} variants={document.variants} />
           </Box>
         ))}

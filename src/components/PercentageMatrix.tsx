@@ -1,7 +1,9 @@
-import { Paper, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
+import { Box, Paper, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
 import { Fragment, useMemo } from "react";
 import { ParsedReport } from "~core/definitions";
 import { PollReportModel } from "~core/models";
+import { PieChart, Pie, ResponsiveContainer } from "recharts";
+import { PercentagePieChart } from "./PieChart";
 
 interface Props {
   report: PollReportModel;
@@ -26,6 +28,26 @@ export const PercentageMatrix = ({ report }: Props) => {
     return Object.keys(parsed).map((key) => Object.values(parsed[+key]).reduce((acc, curr) => acc + curr, 0));
   }, [parsed]);
 
+  const average = useMemo(() => {
+    return summary.reduce((acc, curr) => acc + curr, 0);
+  }, [summary]);
+
+  const pieChart = useMemo(() => {
+    const result: {
+      name: string;
+      value: number;
+    }[] = [];
+
+    summary.forEach((value, index) =>
+      result.push({
+        name: `P${index + 1}`,
+        value,
+      })
+    );
+
+    return result;
+  }, [summary]);
+
   return (
     <Fragment>
       <Typography fontWeight="bold">Матриця відсотків</Typography>
@@ -49,13 +71,17 @@ export const PercentageMatrix = ({ report }: Props) => {
                 <TableCell key={innerKey}>{parsed[+key][+innerKey]}</TableCell>
               ))}
               <TableCell>{summary[+key]}</TableCell>
-              <TableCell>
-                <strong>{summary[+key] / 100}</strong>
-              </TableCell>
+              <TableCell>{(summary[+key] / average).toFixed(4)}</TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
+
+      <Box m={2} />
+
+      <Typography fontWeight="bold">Графіки</Typography>
+
+      <PercentagePieChart data={pieChart} />
     </Fragment>
   );
 };

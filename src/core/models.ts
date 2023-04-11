@@ -19,5 +19,6 @@ export interface PollReportPair {
 export interface PollReportModel {
   pollId: string;
   userId: string;
+  createdAt: string;
   data: PollReportPair[];
 }

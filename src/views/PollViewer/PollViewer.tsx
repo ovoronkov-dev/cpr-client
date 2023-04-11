@@ -9,7 +9,7 @@ export const PollViewer = () => {
   const { id } = useParams<{ id: string }>();
 
   const [document, loading, error] = usePollDocument(id);
-  const [reports, reportLoading] = useReportDocument(id);
+  const [reports] = useReportDocument(id);
 
   if (error) return <Alert severity="error">{error.message}</Alert>;
 
@@ -31,19 +31,17 @@ export const PollViewer = () => {
             Опис опитування:
           </Typography>
 
-          <Typography>{document.description}</Typography>
+          <Typography>{document.description || "-"}</Typography>
         </Grid>
       </Grid>
 
-      {!reportLoading && !reports.length && (
-        <Button component={Link} to={`/playground/${id}`} variant="contained" color="primary" sx={{ mt: 1 }}>
-          Почати проходження
-        </Button>
-      )}
+      <Button component={Link} to={`/playground/${id}`} variant="contained" color="primary" sx={{ mt: 1 }}>
+        Почати проходження
+      </Button>
 
       {reports.map((report) => (
-        <Box mt={2}>
-          <ReportViewer key={report.id} report={report.data() as any} />
+        <Box mt={2} key={report.id}>
+          <ReportViewer report={report.data() as any} />
         </Box>
       ))}
     </Paper>
