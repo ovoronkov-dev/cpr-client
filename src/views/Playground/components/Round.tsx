@@ -51,7 +51,7 @@ export const PlagroundRound = ({ currentRound, variants }: Props) => {
       </Grid>
       <Box sx={{ display: "flex", alignItems: "center", mt: 1 }}>
         <Typography>{field.value.firstValue}%</Typography>
-        <Slider defaultValue={50} max={100} min={0} onChangeCommitted={handleChange} />
+        <Slider defaultValue={50} max={100} min={0} onChangeCommitted={handleChange} sx={{ flex: 1, mx: 1 }} />
         <Typography>{field.value.secondValue}%</Typography>
       </Box>
     </Fragment>

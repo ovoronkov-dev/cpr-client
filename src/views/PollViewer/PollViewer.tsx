@@ -1,15 +1,33 @@
 import { Alert, Box, Button, CircularProgress, Grid, Paper, Typography } from "@mui/material";
+import { useMemo } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { ReportViewer } from "~components/ReportViewer";
+import { PollReportModel } from "~core/models";
 import { usePollDocument } from "~firebase/hooks/usePollDocument";
 import { useReportDocument } from "~firebase/hooks/useReportDocument";
+import { getTime } from "date-fns";
 
 export const PollViewer = () => {
   const { id } = useParams<{ id: string }>();
 
   const [document, loading, error] = usePollDocument(id);
   const [reports] = useReportDocument(id);
+
+  const sortedReports = useMemo(() => {
+    const mappedReports = reports.map((report) => ({
+      id: report.id,
+      ...(report.data() as PollReportModel),
+    }));
+    const reportsWithoutDate = mappedReports.filter((r) => !r.createdAt);
+    const reportsWithDate = mappedReports
+      .filter((r) => !!r.createdAt)
+      .sort((a, b) => getTime(new Date(b.createdAt)) - getTime(new Date(a.createdAt)));
+
+    return [...reportsWithDate, ...reportsWithoutDate];
+  }, [reports]);
+
+  console.log(sortedReports);
 
   if (error) return <Alert severity="error">{error.message}</Alert>;
 
@@ -39,9 +57,9 @@ export const PollViewer = () => {
         Почати проходження
       </Button>
 
-      {reports.map((report) => (
+      {sortedReports.map((report) => (
         <Box mt={2} key={report.id}>
-          <ReportViewer report={report.data() as any} />
+          <ReportViewer report={report} />
         </Box>
       ))}
     </Paper>

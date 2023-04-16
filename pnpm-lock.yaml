@@ -11,6 +11,7 @@ specifiers:
   '@types/react': ^18.0.27
   '@types/react-dom': ^18.0.10
   '@vitejs/plugin-react-swc': ^3.0.0
+  date-fns: ^2.29.3
   firebase: ^9.17.2
   lodash: ^4.17.21
   react: ^18.2.0
@@ -36,6 +37,7 @@ dependencies:
   '@hookform/resolvers': 2.9.11_react-hook-form@7.43.7
   '@mui/icons-material': 5.11.11_4lyzeezzeeal3x6jtb4ni26w7u
   '@mui/material': 5.11.13_xqeqsl5kvjjtyxwyi3jhw3yuli
+  date-fns: 2.29.3
   firebase: 9.17.2
   lodash: 4.17.21
   react: 18.2.0
@@ -1587,6 +1589,11 @@ packages:
   /d3-timer/3.0.1:
     resolution: {integrity: sha512-ndfJ/JxxMd3nw31uyKoY2naivF+r29V+Lc0svZxe1JvvIRmi8hUsrMvdOwgS1o6uBHmiz91geQ0ylPP0aj1VUA==}
     engines: {node: '>=12'}
+    dev: false
+
+  /date-fns/2.29.3:
+    resolution: {integrity: sha512-dDCnyH2WnnKusqvZZ6+jA1O51Ibt8ZMRNkDZdyAyK4YfbDwa/cEmuztzG5pk6hqlp9aSBPYcjOlktquahGwGeA==}
+    engines: {node: '>=0.11'}
     dev: false
 
   /debug/4.3.4:
