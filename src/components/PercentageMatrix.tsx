@@ -1,31 +1,18 @@
 import { Box, Grid, Paper, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
 import { Fragment, useMemo } from "react";
-import { ParsedReport } from "~core/definitions";
 import { PollReportModel } from "~core/models";
-import { PieChart, Pie, ResponsiveContainer } from "recharts";
 import { PercentagePieChart } from "./PieChart";
+import { calculateSummaryPercentageMatrix, parsePercentageMatrix } from "./utils";
 
 interface Props {
   report: PollReportModel;
 }
 
 export const PercentageMatrix = ({ report }: Props) => {
-  const parsed = useMemo(() => {
-    const result: ParsedReport = {};
-
-    report.data.forEach((pair) => {
-      if (!result[pair.firstIndex]) result[pair.firstIndex] = { [pair.firstIndex]: 0 };
-      result[pair.firstIndex][pair.secondIndex] = pair.firstValue;
-
-      if (!result[pair.secondIndex]) result[pair.secondIndex] = { [pair.secondIndex]: 0 };
-      result[pair.secondIndex][pair.firstIndex] = pair.secondValue;
-    });
-
-    return result;
-  }, [report]);
+  const parsed = useMemo(() => parsePercentageMatrix(report), [report]);
 
   const summary = useMemo(() => {
-    return Object.keys(parsed).map((key) => Object.values(parsed[+key]).reduce((acc, curr) => acc + curr, 0));
+    return calculateSummaryPercentageMatrix(parsed);
   }, [parsed]);
 
   const average = useMemo(() => {

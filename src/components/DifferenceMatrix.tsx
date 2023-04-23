@@ -13,6 +13,7 @@ import {
 } from "recharts";
 import { ParsedReport } from "~core/definitions";
 import { PollReportModel } from "~core/models";
+import { calculateDifferenceMatrixValues, parseDifferenceMatrix } from "./utils";
 
 interface Props {
   report: PollReportModel;
@@ -20,21 +21,11 @@ interface Props {
 
 export const DifferenceMatrix = ({ report }: Props) => {
   const parsed = useMemo(() => {
-    const result: ParsedReport = {};
-
-    report.data.forEach((pair) => {
-      if (!result[pair.firstIndex]) result[pair.firstIndex] = { [pair.firstIndex]: 0 };
-      result[pair.firstIndex][pair.secondIndex] = pair.firstValue - pair.secondValue;
-
-      if (!result[pair.secondIndex]) result[pair.secondIndex] = { [pair.secondIndex]: 0 };
-      result[pair.secondIndex][pair.firstIndex] = pair.secondValue - pair.firstValue;
-    });
-
-    return result;
+    return parseDifferenceMatrix(report);
   }, [report]);
 
   const difference = useMemo(() => {
-    return Object.keys(parsed).map((key) => Object.values(parsed[+key]).reduce((acc, curr) => acc + curr, 0));
+    return calculateDifferenceMatrixValues(parsed);
   }, [parsed]);
 
   const chartData = useMemo(() => {
@@ -58,7 +49,6 @@ export const DifferenceMatrix = ({ report }: Props) => {
                   <TableCell key={key}>P{+key + 1}</TableCell>
                 ))}
                 <TableCell>Σ</TableCell>
-                <TableCell>Σ / 100</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -70,9 +60,6 @@ export const DifferenceMatrix = ({ report }: Props) => {
                   ))}
                   <TableCell>
                     <strong>{difference[+key]}</strong>
-                  </TableCell>
-                  <TableCell>
-                    <strong>{difference[+key] / 100}</strong>
                   </TableCell>
                 </TableRow>
               ))}
