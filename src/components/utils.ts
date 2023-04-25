@@ -50,7 +50,7 @@ export const calculateRootsSaatiMatrix = (parsed: ParsedReport) => {
   return keys.map((key) =>
     Math.pow(
       Object.values(parsed[+key]).reduce((acc, curr) => acc * (curr || 1), 1),
-      1 / (keys.length - 1)
+      1 / keys.length
     )
   );
 };
@@ -85,7 +85,7 @@ export const calculateRootsKMatrix = (parsed: ParsedReport) => {
   return keys.map((key) =>
     Math.pow(
       Object.values(parsed[+key]).reduce((acc, curr) => acc * (curr || 1), 1),
-      1 / (keys.length - 1)
+      1 / keys.length
     )
   );
 };
@@ -112,7 +112,7 @@ export const calculateRootsRatioMatrix = (parsed: ParsedReport) => {
   return keys.map((key) =>
     Math.pow(
       Object.values(parsed[+key]).reduce((acc, curr) => acc * (curr || 1), 1),
-      1 / (keys.length - 1)
+      1 / keys.length
     )
   );
 };
