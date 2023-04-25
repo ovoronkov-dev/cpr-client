@@ -58,15 +58,23 @@ export const calculateRootsSaatiMatrix = (parsed: ParsedReport) => {
 export const calculateSaatiMatrix = (report: PollReportModel) =>
   calculateRootsSaatiMatrix(parseSaatiMatrix(report)).map((r) => r.toFixed(4));
 
+const calculateK = (value: number) => {
+  if (value >= 80) return 7;
+  if (value >= 55 && value < 80) return 3;
+  if (value > 45 && value < 50) return 1;
+  if (value > 20 && value <= 45) return 1 / 3;
+  return 1 / 7;
+};
+
 export const parseKMatrix = (report: PollReportModel) => {
   const result: ParsedReport = {};
 
   report.data.forEach((pair) => {
     if (!result[pair.firstIndex]) result[pair.firstIndex] = { [pair.firstIndex]: 1 };
-    result[pair.firstIndex][pair.secondIndex] = calculate(pair.firstValue);
+    result[pair.firstIndex][pair.secondIndex] = calculateK(pair.firstValue);
 
     if (!result[pair.secondIndex]) result[pair.secondIndex] = { [pair.secondIndex]: 1 };
-    result[pair.secondIndex][pair.firstIndex] = calculate(pair.secondValue);
+    result[pair.secondIndex][pair.firstIndex] = calculateK(pair.secondValue);
   });
 
   return result;

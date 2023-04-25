@@ -1,16 +1,9 @@
 import { Grid, Paper, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
 import { Fragment, useMemo } from "react";
-import { ParsedReport } from "~core/definitions";
 import { PollReportModel } from "~core/models";
 import { PercentagePieChart } from "./PieChart";
 import { fraction } from "mathjs";
 import { calculateRootsSaatiMatrix, parseSaatiMatrix } from "./utils";
-
-const SAATI_SCALE = [1 / 9, 1 / 8, 1 / 7, 1 / 6, 1 / 5, 1 / 4, 1 / 3, 1 / 2, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-
-const calculate = (value: number) => {
-  return SAATI_SCALE[Math.floor(value / 6)];
-};
 
 interface Props {
   report: PollReportModel;

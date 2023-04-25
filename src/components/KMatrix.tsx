@@ -5,14 +5,6 @@ import { PercentagePieChart } from "./PieChart";
 import { fraction } from "mathjs";
 import { calculateRootsKMatrix, parseKMatrix } from "./utils";
 
-const calculate = (value: number) => {
-  if (value >= 80) return 7;
-  if (value >= 55 && value < 80) return 3;
-  if (value > 45 && value < 50) return 1;
-  if (value > 20 && value <= 45) return 1 / 3;
-  return 1 / 7;
-};
-
 interface Props {
   report: PollReportModel;
 }
