@@ -36,10 +36,18 @@ export const parseSaatiMatrix = (report: PollReportModel) => {
 
   report.data.forEach((pair) => {
     if (!result[pair.firstIndex]) result[pair.firstIndex] = { [pair.firstIndex]: 1 };
-    result[pair.firstIndex][pair.secondIndex] = calculate(pair.firstValue);
-
     if (!result[pair.secondIndex]) result[pair.secondIndex] = { [pair.secondIndex]: 1 };
-    result[pair.secondIndex][pair.firstIndex] = calculate(pair.secondValue);
+
+    const firstValue = calculate(pair.firstValue);
+    const secondValue = calculate(pair.secondValue);
+
+    if (firstValue > secondValue) {
+      result[pair.firstIndex][pair.secondIndex] = firstValue;
+      result[pair.secondIndex][pair.firstIndex] = 1 / firstValue;
+    } else {
+      result[pair.firstIndex][pair.secondIndex] = 1 / secondValue;
+      result[pair.secondIndex][pair.firstIndex] = secondValue;
+    }
   });
 
   return result;
@@ -55,8 +63,12 @@ export const calculateRootsSaatiMatrix = (parsed: ParsedReport) => {
   );
 };
 
-export const calculateSaatiMatrix = (report: PollReportModel) =>
-  calculateRootsSaatiMatrix(parseSaatiMatrix(report)).map((r) => r.toFixed(4));
+export const calculateSaatiMatrix = (report: PollReportModel) => {
+  const roots = calculateRootsSaatiMatrix(parseSaatiMatrix(report));
+  const average = roots.reduce((a, b) => a + b, 0);
+
+  return roots.map((root) => (root / average).toFixed(4));
+};
 
 const calculateK = (value: number) => {
   if (value >= 80) return 7;
@@ -90,8 +102,12 @@ export const calculateRootsKMatrix = (parsed: ParsedReport) => {
   );
 };
 
-export const calculateKMatrix = (report: PollReportModel) =>
-  calculateRootsKMatrix(parseKMatrix(report)).map((r) => r.toFixed(4));
+export const calculateKMatrix = (report: PollReportModel) => {
+  const roots = calculateRootsKMatrix(parseKMatrix(report));
+  const average = roots.reduce((a, b) => a + b, 0);
+
+  return roots.map((root) => (root / average).toFixed(4));
+};
 
 export const parseRatioMatrix = (report: PollReportModel) => {
   const result: ParsedReport = {};
@@ -117,8 +133,12 @@ export const calculateRootsRatioMatrix = (parsed: ParsedReport) => {
   );
 };
 
-export const calculateRatioMatrix = (report: PollReportModel) =>
-  calculateRootsRatioMatrix(parseRatioMatrix(report)).map((r) => r.toFixed(4));
+export const calculateRatioMatrix = (report: PollReportModel) => {
+  const roots = calculateRootsRatioMatrix(parseRatioMatrix(report));
+  const average = roots.reduce((a, b) => a + b, 0);
+
+  return roots.map((root) => (root / average).toFixed(4));
+};
 
 export const parseDifferenceMatrix = (report: PollReportModel) => {
   const result: ParsedReport = {};

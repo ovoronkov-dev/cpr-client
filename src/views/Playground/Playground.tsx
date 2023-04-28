@@ -11,6 +11,7 @@ import { addDoc, collection } from "firebase/firestore";
 import { adminDb } from "~firebase/admin-config";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { playgroundAuth } from "~firebase/playground-config";
+import { getTime } from "date-fns";
 
 export const Playground = () => {
   const { id } = useParams<{ id: string }>();
@@ -43,7 +44,7 @@ export const Playground = () => {
       pollId: id,
       userId: user?.uid,
       data: values.pairs,
-      createdAt: new Date().toLocaleString(),
+      createdAt: getTime(new Date()),
     });
 
     navigate(`/polls/${id}`);

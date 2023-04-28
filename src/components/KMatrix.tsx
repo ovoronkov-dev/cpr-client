@@ -18,6 +18,8 @@ export const KMatrix = ({ report }: Props) => {
     return calculateRootsKMatrix(parsed);
   }, [parsed]);
 
+  const average = useMemo(() => roots.reduce((a, b) => a + b, 0), [roots]);
+
   const pieChart = useMemo(() => {
     return roots.map((value, index) => ({
       name: `P${index + 1}`,
@@ -39,6 +41,7 @@ export const KMatrix = ({ report }: Props) => {
                   <TableCell key={key}>P{+key + 1}</TableCell>
                 ))}
                 <TableCell>√</TableCell>
+                <TableCell>Норм</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -56,6 +59,9 @@ export const KMatrix = ({ report }: Props) => {
                   })}
                   <TableCell>
                     <strong>{roots[+key].toFixed(4)}</strong>
+                  </TableCell>
+                  <TableCell>
+                    <strong>{(roots[+key] / average).toFixed(4)}</strong>
                   </TableCell>
                 </TableRow>
               ))}

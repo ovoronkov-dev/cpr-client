@@ -19,10 +19,16 @@ export const PollViewer = () => {
       id: report.id,
       ...(report.data() as PollReportModel),
     }));
-    const reportsWithoutDate = mappedReports.filter((r) => !r.createdAt);
+    const reportsWithoutDate = mappedReports.filter((r) => !r.createdAt || typeof r.createdAt !== "number");
     const reportsWithDate = mappedReports
-      .filter((r) => !!r.createdAt)
-      .sort((a, b) => getTime(new Date(b.createdAt)) - getTime(new Date(a.createdAt)));
+      .filter((r) => {
+        return !!r.createdAt && typeof r.createdAt === "number";
+      })
+      .sort((a, b) => {
+        return +b.createdAt - +a.createdAt;
+      });
+
+    console.log(reportsWithoutDate, reportsWithDate);
 
     return [...reportsWithDate, ...reportsWithoutDate];
   }, [reports]);

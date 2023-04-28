@@ -18,6 +18,8 @@ export const RatioMatrix = ({ report }: Props) => {
     return calculateRootsRatioMatrix(parsed);
   }, [parsed]);
 
+  const average = useMemo(() => roots.reduce((acc, curr) => acc + curr, 0), [roots]);
+
   const pieChart = useMemo(() => {
     return roots.map((value, index) => ({
       name: `P${index + 1}`,
@@ -39,6 +41,7 @@ export const RatioMatrix = ({ report }: Props) => {
                   <TableCell key={key}>P{+key + 1}</TableCell>
                 ))}
                 <TableCell>√</TableCell>
+                <TableCell>Норм</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -50,6 +53,9 @@ export const RatioMatrix = ({ report }: Props) => {
                   ))}
                   <TableCell>
                     <strong>{roots[+key].toFixed(4)}</strong>
+                  </TableCell>
+                  <TableCell>
+                    <strong>{(roots[+key] / average).toFixed(4)}</strong>
                   </TableCell>
                 </TableRow>
               ))}
