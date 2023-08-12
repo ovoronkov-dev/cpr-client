@@ -160,3 +160,32 @@ export const calculateDifferenceMatrixValues = (parsed: ParsedReport) => {
 
 export const calculateDifferenceMatrix = (report: PollReportModel) =>
   calculateDifferenceMatrixValues(parseDifferenceMatrix(report));
+
+const calculateKDifference = (value: number) => {
+  if (value >= 70) return 3;
+  if (value >= 55 && value < 70) return 1;
+  if (value > 45 && value < 55) return 0;
+  if (value >= 31 && value <= 45) return -1;
+  return -3;
+};
+
+export const parseKDifferenceMatrix = (report: PollReportModel) => {
+  const result: ParsedReport = {};
+
+  report.data.forEach((pair) => {
+    if (!result[pair.firstIndex]) result[pair.firstIndex] = { [pair.firstIndex]: 0 };
+    result[pair.firstIndex][pair.secondIndex] = calculateKDifference(pair.firstValue);
+
+    if (!result[pair.secondIndex]) result[pair.secondIndex] = { [pair.secondIndex]: 0 };
+    result[pair.secondIndex][pair.firstIndex] = calculateKDifference(pair.secondValue);
+  });
+
+  return result;
+};
+
+export const calculateKDifferenceMatrixValues = (parsed: ParsedReport) => {
+  return Object.keys(parsed).map((key) => Object.values(parsed[+key]).reduce((acc, curr) => acc + curr, 0));
+};
+
+export const calculateKDifferenceMatrix = (report: PollReportModel) =>
+  calculateDifferenceMatrixValues(parseDifferenceMatrix(report));

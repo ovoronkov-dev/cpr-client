@@ -8,6 +8,7 @@ import { KMatrix } from "./KMatrix";
 import { SummaryMatrix } from "./SummaryMatrix";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { format } from "date-fns";
+import { KDifferenceMatrix } from "./KDifferenceMatrix";
 
 interface Props {
   report: PollReportModel;
@@ -39,6 +40,10 @@ export const ReportViewer = ({ report }: Props) => {
           <Box m={1} />
 
           <KMatrix report={report} />
+
+          <Box m={1} />
+
+          <KDifferenceMatrix report={report} />
 
           <Box m={1} />
 
