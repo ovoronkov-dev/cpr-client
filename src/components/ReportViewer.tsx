@@ -43,15 +43,15 @@ export const ReportViewer = ({ report }: Props) => {
 
           <Box m={1} />
 
-          <KDifferenceMatrix report={report} />
-
-          <Box m={1} />
-
           <RatioMatrix report={report} />
 
           <Box m={1} />
 
           <DifferenceMatrix report={report} />
+
+          <Box m={1} />
+
+          <KDifferenceMatrix report={report} />
         </AccordionDetails>
       </Accordion>
     </Box>
